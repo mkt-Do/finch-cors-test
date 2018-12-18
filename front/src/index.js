@@ -14,3 +14,13 @@ fetch('http://localhost:8081/randP', {
   .then(json => {
     console.log(json);
   });
+
+document.cookie = 'hoge=100';
+
+fetch('http://localhost:8081/randC', {
+  mode: 'cors',
+  credentials: 'include',
+}).then(res => res.json())
+  .then(json => {
+    console.log(json);
+  });

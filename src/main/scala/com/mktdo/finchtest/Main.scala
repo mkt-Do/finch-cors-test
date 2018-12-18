@@ -31,7 +31,13 @@ object Main extends App {
       Ok(Result("POST", random * i))
     }
 
-  val baseService = (randG :+: randP).toService
+  val hogeCookie = cookie("hoge")
+  def randC: Endpoint[Result] =
+    get("randC" :: hogeCookie) { c: Cookie =>
+      Ok(Result("GET", c.value.toInt * random))
+    }
+
+  val baseService = (randG :+: randP :+: randC).toService
 
   val service = new Cors.HttpFilter(policy).andThen(baseService)
 
