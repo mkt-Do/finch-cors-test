@@ -13,6 +13,12 @@ import scala.math.random
 
 object Main extends App {
 
+  val policy: Cors.Policy = Cors.Policy(
+    allowsOrigin = _ => Some("*"),
+    allowsMethods = _ => Some(Seq("GET", "POST", "PATCH", "DELETE")),
+    allowsHeaders = _ => Some(Seq())
+  )
+
   case class Result(method: String, rand: Double)
 
   def randG: Endpoint[Result] =
@@ -20,7 +26,9 @@ object Main extends App {
       Ok(Result("GET", random))
     }
 
-  val service = randG.toService
+  val baseService = randG.toService
+
+  val service = new Cors.HttpFilter(policy).andThen(baseService)
 
   Await.ready(Http.server.serve(":8081", service))
 }
