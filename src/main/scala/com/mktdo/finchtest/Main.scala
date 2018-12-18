@@ -16,7 +16,7 @@ object Main extends App {
   val policy: Cors.Policy = Cors.Policy(
     allowsOrigin = _ => Some("*"),
     allowsMethods = _ => Some(Seq("GET", "POST", "PATCH", "DELETE")),
-    allowsHeaders = _ => Some(Seq())
+    allowsHeaders = _ => Some(Seq("Content-Type"))
   )
 
   case class Result(method: String, rand: Double)
