@@ -14,7 +14,7 @@ import scala.math.random
 object Main extends App {
 
   val policy: Cors.Policy = Cors.Policy(
-    allowsOrigin = _ => Some("*"),
+    allowsOrigin = _ => Some("http://localhost:9000"),
     allowsMethods = _ => Some(Seq("GET", "POST", "PATCH", "DELETE")),
     allowsHeaders = _ => Some(Seq("Content-Type"))
   )
