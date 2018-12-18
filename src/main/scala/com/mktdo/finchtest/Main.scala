@@ -26,7 +26,12 @@ object Main extends App {
       Ok(Result("GET", random))
     }
 
-  val baseService = randG.toService
+  def randP: Endpoint[Result] =
+    post("randP" :: jsonBody[Int]) { i: Int =>
+      Ok(Result("POST", random * i))
+    }
+
+  val baseService = (randG :+: randP).toService
 
   val service = new Cors.HttpFilter(policy).andThen(baseService)
 
